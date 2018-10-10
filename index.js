@@ -158,13 +158,12 @@ function winningCases(arr, user) {
     let checkWinner;
     checkWinner = checkRows(arr);
     if(checkWinner) {
-        let parent = document.getElementById('gridParent');
-        var node = document.createElement("P"); 
-        let text = `Winner is ${user}`;                
+        let parent = document.getElementById('header');
+        var node = document.createElement("H3"); 
+        let text = `Winner is ${user}`;
         var textnode = document.createTextNode(text);
         node.appendChild(textnode);
-        if(parent.children.length < 2)
-            parent.appendChild(node);
+        parent.append(node);
     }
     return checkWinner;
 }
