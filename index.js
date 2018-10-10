@@ -21,6 +21,8 @@
 const grid = [];
 const GRID_LENGTH = 3;
 let turn = 'X';
+
+//Global varaible to Declare the winner and stop any further actions.
 let winner;
 
 function initializeGrid() {
@@ -70,12 +72,15 @@ function renderMainGrid() {
     const parent = document.getElementById("grid");
     const columnDivs = getColumns();
     parent.innerHTML = '<div class="columnsStyle">' + columnDivs + '</div>';
+    
+    //After every render, the function checks if there is ann wnner yet.
     winner  = findWinner();
     if(winner) {
         return;
     }
 }
 
+//Function to find the winner
 function findWinner() { 
     let userArray = [];
     let compArray = [];
@@ -102,6 +107,7 @@ function findWinner() {
     return isWinner;
 }
 
+//Helper function for finding the winner, this checks diagonals for specific user
 function checkDiagonal(list) {
     let diag1 = 0, diag2 = 0;
     list.forEach(function(obj) {
@@ -118,6 +124,7 @@ function checkDiagonal(list) {
         return true;
 }
 
+//Helper function for finding the winner, this checks columns for specific user
 function checkColumns(list) {
     let col0  = 0, col1 = 0, col2 = 0;
     list.forEach(function(obj) {
@@ -134,6 +141,7 @@ function checkColumns(list) {
         return checkDiagonal(list);
 }
 
+//Helper function for finding the winner, this checks rows for specific user
 function checkRows(list) {
     let row0 = 0, row1 = 0, row2 = 0;
     list.forEach(function(obj) {
@@ -150,6 +158,7 @@ function checkRows(list) {
         return checkColumns(list);
 }
 
+//Helper function to Evaluate the winning cases and Declare the winner
 function winningCases(arr, user) {
     let checkWinner;
     checkWinner = checkRows(arr);
@@ -166,6 +175,9 @@ function winningCases(arr, user) {
 }
 
 function onBoxClick(value) {
+    if(winner) {
+        return;
+    }
     var rowIdx = this.getAttribute("rowIdx");
     var colIdx = this.getAttribute("colIdx");
     if(value === `comp`) {
@@ -192,6 +204,7 @@ function createCircle(box) {
     
 }
 
+//Helper function to find empty boxes
 function findEmptyBox() {
     var boxes = document.getElementsByClassName("box");
     for(var idx = 0; idx < boxes.length; idx++) {
@@ -201,6 +214,7 @@ function findEmptyBox() {
     }
 }
 
+//Function to automate computer moves
 function computerMoves() {
     var rows = document.getElementsByClassName("rowStyle");
     setTimeout( () => {
